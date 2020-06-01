@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Ships from "@/components/Ships.vue";
+import Ship from "@/components/Ship.vue";
 
 Vue.use(VueRouter);
 
@@ -14,7 +15,15 @@ const routes = [
   {
     path: "/ships",
     name: "Ships",
-    component: Ships
+    component: Ships,
+    children: [
+      {
+        path: ":id",
+        name: "Ship",
+        component: Ship,
+        props: true
+      }
+    ]
   }
 ];
 

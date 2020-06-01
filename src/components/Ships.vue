@@ -8,37 +8,34 @@
       {{ this.error }}
     </div>
     <div v-for="ship in ships" :key="ship.ship_id">
-      {{ ship.ship_name }}
+      <router-link :to="{ name: 'Ship', params: { id: ship.ship_id } }">
+        {{ ship.ship_name }}
+      </router-link>
     </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-import shipsApi from "@/services/shipsApi";
-
 export default {
   name: "Ships",
-  data: function() {
-    return {
-      loading: false,
-      error: null,
-      ships: []
-    };
-  },
   created: function() {
     this.getShips();
   },
+  computed: {
+    ships() {
+      return this.$store.state.ships.all;
+    },
+    error() {
+      return this.$store.state.ships.error;
+    },
+    loading() {
+      return this.$store.state.ships.loading;
+    }
+  },
   methods: {
-    async getShips() {
-      try {
-        this.error = null;
-        this.loading = true;
-        this.ships = await shipsApi.getAll();
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
+    getShips() {
+      this.$store.dispatch("ships/getShips");
     }
   }
 };
