@@ -23,16 +23,14 @@ export default {
     }
   },
   actions: {
-    async getShips({ commit }) {
-      try {
-        commit("setError", null);
-        commit("setLoading", false);
-        await shipsApi.getAll().then(ships => commit("setAll", ships));
-      } catch (error) {
-        commit("setError", error);
-      } finally {
-        commit("setLoading", false);
-      }
+    getShips({ commit }) {
+      commit("setError", null);
+      commit("setLoading", false);
+      shipsApi
+        .getAll()
+        .then(ships => commit("setAll", ships))
+        .catch(error => commit("setError", error))
+        .finally(() => commit("setLoading", false));
     },
     getShip({ state, commit }, id) {
       const ship = state.all.find(ship => ship.ship_id === id);
