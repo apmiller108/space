@@ -1,5 +1,20 @@
 import shipsApi from "@/services/shipsApi";
 
+export const mutations = {
+  setAll(state, ships) {
+    state.all = ships;
+  },
+  setSelected(state, ship) {
+    state.selected = ship;
+  },
+  setLoading(state, bool) {
+    state.loading = bool;
+  },
+  setError(state, error) {
+    state.error = error;
+  }
+};
+
 export default {
   namespaced: true,
   state: {
@@ -8,20 +23,7 @@ export default {
     error: null,
     loading: false
   },
-  mutations: {
-    setAll(state, ships) {
-      state.all = ships;
-    },
-    setSelected(state, ship) {
-      state.selected = ship;
-    },
-    setLoading(state, bool) {
-      state.loading = bool;
-    },
-    setError(state, error) {
-      state.error = error;
-    }
-  },
+  mutations,
   actions: {
     getShips({ commit }) {
       commit("setError", null);
