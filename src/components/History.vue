@@ -2,7 +2,7 @@
   <div id="history">
     <h1>History</h1>
     <div class="history">
-      <ul>
+      <ul class="uk-list">
         <li v-for="event in history" v-bind:key="event.id">
           {{ event.title }}
         </li>
