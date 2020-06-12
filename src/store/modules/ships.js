@@ -1,4 +1,4 @@
-import shipsApi from "@/services/shipsApi";
+import shipsApi from "@/services/spacex/shipsApi";
 
 export const mutations = {
   setAll(state, ships) {

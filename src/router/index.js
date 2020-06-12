@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Ships from "@/components/Ships.vue";
 import Ship from "@/components/Ship.vue";
+import History from "@/components/History.vue";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,11 @@ const routes = [
         props: true
       }
     ]
+  },
+  {
+    path: "/history",
+    name: "History",
+    component: History
   }
 ];
 

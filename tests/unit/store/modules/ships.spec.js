@@ -15,7 +15,6 @@ describe("ships", () => {
       const ships = [{ ship_id: 1 }];
 
       it("sets the 'all' property", () => {
-        debugger
         setAll(state, ships);
         expect(state.all).to.equal(ships);
       });
