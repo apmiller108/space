@@ -18,13 +18,21 @@ export const mutations = {
 export const actions = {
   getShips({ commit, getters }) {
     if (getters.all.length) return;
-    commit("setError", null);
-    commit("setLoading", false);
-    shipsApi
-      .getAll()
-      .then(ships => commit("setAll", ships))
-      .catch(error => commit("setError", error))
-      .finally(() => commit("setLoading", false));
+    return new Promise((resolve, reject) => {
+      commit("setError", null);
+      commit("setLoading", false);
+      shipsApi
+        .getAll()
+        .then(ships => {
+          commit("setAll", ships);
+          resolve(ships);
+        })
+        .catch(error => {
+          commit("setError", error);
+          reject(error);
+        })
+        .finally(() => commit("setLoading", false));
+    });
   },
   selectShip({ state, commit }, id) {
     const ship = state.all.find(ship => ship.ship_id === id);
