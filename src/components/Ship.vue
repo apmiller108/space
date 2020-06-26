@@ -1,10 +1,12 @@
 <template>
   <div id="ship">
-    {{ ship }}
+    {{ this["ships/selected"] }}
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Ship",
   props: {
@@ -13,19 +15,17 @@ export default {
     }
   },
   created: function() {
-    this.getShip();
+    this.selectShip();
   },
   watch: {
-    $route: "getShip"
+    $route: "selectShip"
   },
   computed: {
-    ship() {
-      return this.$store.state.ships.selected;
-    }
+    ...mapGetters(["ships/selected"])
   },
   methods: {
-    getShip() {
-      this.$store.dispatch("ships/getShip", this.id);
+    selectShip() {
+      this.$store.dispatch("ships/selectShip", this.id);
     }
   }
 };

@@ -7,7 +7,7 @@
     <div v-if="error">
       {{ this.error }}
     </div>
-    <div v-for="ship in ships" :key="ship.ship_id">
+    <div v-for="ship in this['ships/all']" :key="ship.ship_id">
       <router-link :to="{ name: 'Ship', params: { id: ship.ship_id } }">
         {{ ship.ship_name }}
       </router-link>
@@ -17,21 +17,21 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Ships",
   created: function() {
     this.getShips();
   },
   computed: {
-    ships() {
-      return this.$store.state.ships.all;
-    },
     error() {
       return this.$store.state.ships.error;
     },
     loading() {
       return this.$store.state.ships.loading;
-    }
+    },
+    ...mapGetters(["ships/all"])
   },
   methods: {
     getShips() {
