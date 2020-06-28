@@ -35,6 +35,9 @@ export const actions = {
 export const getters = {
   all(state) {
     return state.all;
+  },
+  isLoading(state) {
+    return state.loading;
   }
 };
 
