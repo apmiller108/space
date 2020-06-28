@@ -14,17 +14,17 @@
               {{ launch.mission_name }}
             </div>
             <div class="timeline-item-tether">
-              <ul class="uk-dotnav">
+              <ul class="timeline-item-tether uk-dotnav">
                 <li class="uk-active"><a href=""></a></li>
                 <li class="uk-active"><a href=""></a></li>
                 <li class="uk-active"><a href=""></a></li>
               </ul>
             </div>
             <div class="timeline-item-date">
-              {{ launch.launch_date_utc }}
+              {{ launch.launch_date_utc | date({ utc: true }) }}
             </div>
           </div>
-          <hr class="uk-divider-vertical"/>
+          <hr class="uk-divider-vertical" />
         </div>
       </div>
     </div>
@@ -89,7 +89,8 @@ export default {
   .timeline-item-tether {
     order: 2;
     .uk-dotnav {
-      position: absolute;
+      position: relative;
+      top: 50%;
       transform: translateY(-50%);
       a {
         pointer-events: none;
