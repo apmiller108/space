@@ -11,7 +11,16 @@
         >
           <div class="timeline-item uk-card uk-card-body">
             <div class="timeline-item-details">
-              {{ launch.mission_name }}
+              <div
+                class="mission-patch"
+                :style="{
+                  background: `url(${launch.links.mission_patch_small}) no-repeat center center`,
+                  'background-size': 'cover'
+                }"
+              ></div>
+              <div class="mission-overview">
+                {{ launch.mission_name }}
+              </div>
             </div>
             <div class="timeline-item-tether">
               <ul class="timeline-item-tether uk-dotnav">
@@ -21,7 +30,19 @@
               </ul>
             </div>
             <div class="timeline-item-date">
-              {{ launch.launch_date_utc | date({ utc: true }) }}
+              <div class="month">
+                {{
+                  launch.launch_date_utc | date({ format: "MMM", utc: true })
+                }}
+              </div>
+              <div class="day">
+                {{ launch.launch_date_utc | date({ format: "D", utc: true }) }}
+              </div>
+              <div class="year">
+                {{
+                  launch.launch_date_utc | date({ format: "YYYY", utc: true })
+                }}
+              </div>
             </div>
           </div>
           <hr class="uk-divider-vertical" />
@@ -66,11 +87,18 @@ export default {
         margin-left: 50%;
       }
       .timeline-item-date {
-        left: -3em;
+        left: -3rem;
         order: 1;
       }
       .timeline-item-details {
+        grid-template-columns: 66.6% auto;
         order: 3;
+      }
+      .mission-patch {
+        order: 2;
+      }
+      .mission-overview {
+        order: 1;
       }
     }
     &:nth-child(odd) {
@@ -78,13 +106,25 @@ export default {
         margin-right: 50%;
       }
       .timeline-item-date {
-        right: -3em;
+        right: -3rem;
         order: 3;
       }
       .timeline-item-details {
+        grid-template-columns: 33.3% auto;
         order: 1;
       }
+      .mission-patch {
+        order: 1;
+      }
+      .mission-overview {
+        order: 2;
+      }
     }
+  }
+  .timeline-item-details {
+    display: grid;
+    height: 10rem;
+    width: 30rem;
   }
   .timeline-item-tether {
     order: 2;
@@ -100,11 +140,18 @@ export default {
   .timeline-item-date {
     border-radius: 50%;
     border: 1px solid black;
-    width: 6em;
-    height: 6em;
+    width: 6rem;
+    height: 6rem;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .month {
+      text-transform: uppercase;
+    }
   }
 }
 </style>
