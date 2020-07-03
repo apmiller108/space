@@ -4,49 +4,16 @@
       <h1 class="uk-heading-large">Launches</h1>
       <span v-if="this['launches/isLoading']" uk-spinner="ratio: 4.5"></span>
       <div class="timeline">
-        <div
+        <LaunchesItem
           class="launch"
           v-for="launch in this['launches/all']"
+          :launch="launch"
           :key="launch.launch_date_unix"
         >
-          <div class="timeline-item uk-card uk-card-body">
-            <div class="timeline-item-details">
-              <div
-                class="mission-patch"
-                :style="{
-                  background: `url(${launch.links.mission_patch_small}) no-repeat center center`,
-                  'background-size': 'cover'
-                }"
-              ></div>
-              <div class="mission-overview">
-                {{ launch.mission_name }}
-              </div>
-            </div>
-            <div class="timeline-item-tether">
-              <ul class="timeline-item-tether uk-dotnav">
-                <li class="uk-active"><a href=""></a></li>
-                <li class="uk-active"><a href=""></a></li>
-                <li class="uk-active"><a href=""></a></li>
-              </ul>
-            </div>
-            <div class="timeline-item-date">
-              <div class="month">
-                {{
-                  launch.launch_date_utc | date({ format: "MMM", utc: true })
-                }}
-              </div>
-              <div class="day">
-                {{ launch.launch_date_utc | date({ format: "D", utc: true }) }}
-              </div>
-              <div class="year">
-                {{
-                  launch.launch_date_utc | date({ format: "YYYY", utc: true })
-                }}
-              </div>
-            </div>
-          </div>
-          <hr class="uk-divider-vertical" />
-        </div>
+          <template v-slot:divider>
+            <hr class="uk-divider-vertical timeline-divider" />
+          </template>
+        </LaunchesItem>
       </div>
     </div>
   </section>
@@ -54,13 +21,14 @@
 
 <script>
 import { mapGetters } from "vuex";
+import LaunchesItem from "./LaunchesItem";
 
 export default {
   name: "Launches",
+  components: { LaunchesItem },
   created: function() {
     this.getLaunches();
   },
-  components: {},
   computed: {
     ...mapGetters(["launches/all", "launches/isLoading"])
   },
@@ -72,7 +40,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .timeline {
   display: flex;
   flex-direction: column;
@@ -80,6 +48,10 @@ export default {
     display: flex;
     width: 50%;
     justify-content: space-around;
+  }
+  .timeline-divider {
+    height: 5rem;
+    margin: -3rem auto;
   }
   .launch {
     &:nth-child(even) {
