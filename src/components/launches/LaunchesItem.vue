@@ -1,6 +1,8 @@
 <template>
   <div class="launches-item">
-    <div class="timeline-item uk-card uk-card-body uk-card-default">
+    <div
+      class="timeline-item uk-card uk-card-body uk-card-default uk-card-hover"
+    >
       <div class="timeline-item-details">
         <div
           class="mission-patch"
@@ -10,15 +12,17 @@
           }"
         ></div>
         <div class="mission-overview">
-          <div class="mission-name">
-            {{ missionName }}
-          </div>
-          <div class="launch-site">
-            {{ launchSiteName }}
-          </div>
-          <div class="launch-details">
-            {{ launchDetail }}
-          </div>
+          <article class="uk-article">
+            <h3 class="uk-article-title mission-name">
+              {{ missionName }}
+            </h3>
+            <p class="uk-article-meta launch-site">
+              {{ launchSiteName }}
+            </p>
+            <p class="launch-details">
+              {{ launchDetail }}
+            </p>
+          </article>
         </div>
       </div>
     </div>
@@ -74,5 +78,14 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.launch-site {
+  margin: 0;
+}
+.launch-details {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  overflow: hidden;
+}
 </style>
