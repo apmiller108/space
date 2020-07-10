@@ -3,14 +3,16 @@
     <div class="uk-container uk-container-large">
       <h1 class="uk-heading-large">Launches</h1>
       <div class="timeline">
-        <LaunchesItem
-          class="launch"
-          v-for="launch in this['launches/all']"
-          :launch="launch"
-          :key="launch.launch_date_unix"
-        >
-        </LaunchesItem>
-        <span v-if="this['launches/isLoading']" uk-spinner="ratio: 4.5"></span>
+        <transition-group name="lift-off" tag="div">
+          <LaunchesItem
+            class="launch"
+            v-for="launch in this['launches/all']"
+            :launch="launch"
+            :key="launch.launch_date_unix"
+          >
+          </LaunchesItem>
+        </transition-group>
+        <span v-if="this['launches/isLoading']" uk-spinner="ratio: 3.5"></span>
       </div>
     </div>
   </section>
@@ -148,5 +150,14 @@ export default {
       text-transform: uppercase;
     }
   }
+}
+.lift-off-enter-active,
+.lift-off-leave-active {
+  transition: all 1s;
+}
+.lift-off-enter,
+.lift-off-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>
