@@ -82,10 +82,23 @@ export default {
 .launch-site {
   margin: 0;
 }
+.mission-name,
+.launch-site {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: pre;
+}
 .launch-details {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   display: -webkit-box;
+  overflow: hidden;
+}
+.mission-patch {
+  width: 10em;
+  height: 10em;
+}
+.timeline-item-details {
   overflow: hidden;
 }
 </style>

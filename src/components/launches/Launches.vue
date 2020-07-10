@@ -55,8 +55,6 @@ export default {
   display: flex;
   flex-direction: column;
   .timeline-item {
-    display: flex;
-    justify-content: space-around;
     width: 80%;
   }
   .timeline-divider {
