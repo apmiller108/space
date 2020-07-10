@@ -98,6 +98,9 @@ export default {
   width: 10em;
   height: 10em;
 }
+.mission-overview {
+  padding: 0 1em;
+}
 .timeline-item-details {
   overflow: hidden;
 }

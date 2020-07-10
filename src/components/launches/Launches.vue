@@ -2,7 +2,6 @@
   <section class="launches uk-section uk-section-muted">
     <div class="uk-container uk-container-large">
       <h1 class="uk-heading-large">Launches</h1>
-      <span v-if="this['launches/isLoading']" uk-spinner="ratio: 4.5"></span>
       <div class="timeline">
         <LaunchesItem
           class="launch"
@@ -11,6 +10,7 @@
           :key="launch.launch_date_unix"
         >
         </LaunchesItem>
+        <span v-if="this['launches/isLoading']" uk-spinner="ratio: 4.5"></span>
       </div>
     </div>
   </section>
@@ -42,7 +42,7 @@ export default {
         document.documentElement.scrollTop + window.innerHeight ===
         document.documentElement.offsetHeight;
 
-      if (atBottom && !this.$store.getters["launches/isLoading"]) {
+      if (atBottom && !this["launches/isLoading"]) {
         this.getLaunches();
       }
     }
@@ -80,7 +80,7 @@ export default {
         order: 3;
       }
       .timeline-item-details {
-        grid-template-columns: 66.6% auto;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
         order: 3;
       }
       .mission-patch {
@@ -105,7 +105,7 @@ export default {
         order: 1;
       }
       .timeline-item-details {
-        grid-template-columns: 33.3% auto;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
         order: 1;
       }
       .mission-patch {
