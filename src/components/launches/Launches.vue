@@ -24,7 +24,11 @@ export default {
   name: "Launches",
   components: { LaunchesItem },
   created: function() {
+    if (this.$store.getters["launches/all"].length) return;
     this.getLaunches();
+  },
+  mounted: function() {
+    window.onscroll = this.getLaunchesOnScroll;
   },
   computed: {
     ...mapGetters(["launches/all", "launches/isLoading"])
@@ -32,6 +36,15 @@ export default {
   methods: {
     getLaunches() {
       this.$store.dispatch("launches/getLaunches");
+    },
+    getLaunchesOnScroll() {
+      const atBottom =
+        document.documentElement.scrollTop + window.innerHeight ===
+        document.documentElement.offsetHeight;
+
+      if (atBottom && !this.$store.getters["launches/isLoading"]) {
+        this.getLaunches();
+      }
     }
   }
 };

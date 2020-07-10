@@ -13,12 +13,12 @@ export const mutations = {
 };
 
 export const actions = {
-  getLaunches({ commit }) {
+  getLaunches({ commit, getters }) {
     return new Promise((resolve, reject) => {
       commit("setError", null);
       commit("setLoading", true);
       launchesApi
-        .getAll()
+        .getAll({ offset: getters.all.length })
         .then(launches => {
           commit("addLaunches", launches);
           resolve(launches);
