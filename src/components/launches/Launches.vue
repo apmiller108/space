@@ -59,10 +59,6 @@ export default {
   .timeline-item {
     width: 80%;
   }
-  .timeline-divider {
-    height: 5rem;
-    margin: -3rem auto;
-  }
   .launch {
     width: 50%;
     position: relative;

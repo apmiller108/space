@@ -2,6 +2,7 @@
   <div class="launches-item">
     <div
       class="timeline-item uk-card uk-card-body uk-card-default uk-card-hover"
+      :uk-toggle="`target: #${modalId}`"
     >
       <div class="timeline-item-details">
         <div
@@ -44,12 +45,19 @@
         {{ launchDateUtc | date({ format: "YYYY", utc: true }) }}
       </div>
     </div>
+    <LaunchItemDetail
+      :launch="this.launch"
+      :modal-id="modalId"
+    ></LaunchItemDetail>
   </div>
 </template>
 
 <script>
+import LaunchItemDetail from "@/components/launches/LaunchesItemDetail";
+
 export default {
   name: "LaunchesItem",
+  components: { LaunchItemDetail },
   props: {
     launch: {
       type: Object,
@@ -73,6 +81,9 @@ export default {
     },
     launchDetail() {
       return this.launch.details;
+    },
+    modalId() {
+      return `launch-detail-modal-${this.missionName}`;
     }
   }
 };
