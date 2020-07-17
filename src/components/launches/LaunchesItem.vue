@@ -21,7 +21,7 @@
               {{ launchSiteName }}
             </p>
             <p class="launch-details">
-              {{ launchDetail }}
+              {{ launchDetails }}
             </p>
           </article>
         </div>
@@ -45,19 +45,19 @@
         {{ launchDateUtc | date({ format: "YYYY", utc: true }) }}
       </div>
     </div>
-    <LaunchItemDetail
-      :launch="this.launch"
-      :modal-id="modalId"
-    ></LaunchItemDetail>
+    <Modal :modal-id="modalId">
+      <LaunchesItemDetail :launch="this.launch" />
+    </Modal>
   </div>
 </template>
 
 <script>
-import LaunchItemDetail from "@/components/launches/LaunchesItemDetail";
+import LaunchesItemDetail from "@/components/launches/LaunchesItemDetail";
+import Modal from "@/components/Modal";
 
 export default {
   name: "LaunchesItem",
-  components: { LaunchItemDetail },
+  components: { LaunchesItemDetail, Modal },
   props: {
     launch: {
       type: Object,
@@ -79,11 +79,14 @@ export default {
     launchSiteName() {
       return this.launch.launch_site.site_name_long;
     },
-    launchDetail() {
+    launchDetails() {
       return this.launch.details;
     },
+    launchDateUnix() {
+      return this.launch.launch_date_unix;
+    },
     modalId() {
-      return `launch-detail-modal-${this.missionName}`;
+      return `launch-detail-modal-${this.launchDateUnix}`;
     }
   }
 };
