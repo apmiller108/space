@@ -20,9 +20,15 @@
             <p class="uk-article-meta launch-site">
               {{ launchSiteName }}
             </p>
-            <p class="launch-details">
-              {{ launchDetails }}
-            </p>
+            <CollapsibleText
+              :text-content="launchDetails"
+              :max-height-px="75"
+              :is-togglable="false"
+            >
+              <p class="launch-details">
+                {{ launchDetails }}
+              </p>
+            </CollapsibleText>
           </article>
         </div>
       </div>
@@ -54,10 +60,11 @@
 <script>
 import LaunchesItemDetail from "@/components/launches/LaunchesItemDetail";
 import Modal from "@/components/Modal";
+import CollapsibleText from "@/components/CollapsibleText";
 
 export default {
   name: "LaunchesItem",
-  components: { LaunchesItemDetail, Modal },
+  components: { CollapsibleText, LaunchesItemDetail, Modal },
   props: {
     launch: {
       type: Object,
@@ -102,11 +109,11 @@ export default {
   overflow: hidden;
   white-space: pre;
 }
-.launch-details {
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  display: -webkit-box;
-  overflow: hidden;
+.mission-name {
+  margin: 0;
+}
+.launch-site {
+  margin: 0 0 1em;
 }
 .mission-patch {
   width: 10em;

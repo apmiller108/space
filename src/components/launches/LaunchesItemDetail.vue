@@ -7,6 +7,7 @@
     </div>
     <div class="meta">
       <p class="uk-article-meta launch-time-and-place">
+        <!-- TODO: Google Maps link `https://maps.google.com/?q={{ launchSiteName }} -->
         <span>{{ launchSiteName }}</span>
         <span>{{ launchDateUtc | date({ utc: true }) }}</span>
       </p>

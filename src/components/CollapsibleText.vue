@@ -35,6 +35,12 @@ export default {
       default: function() {
         return "";
       }
+    },
+    isTogglable: {
+      type: Boolean,
+      default: function() {
+        return true;
+      }
     }
   },
   methods: {
@@ -42,7 +48,7 @@ export default {
       return this.$refs.collapsibleText.children[0];
     },
     truncateText() {
-      shave(this.textElem(), 100);
+      shave(this.textElem(), this.maxHeightPx);
       this.toggleButtonText = "more";
     },
     textIsTruncated() {
@@ -63,7 +69,7 @@ export default {
   },
   mounted: function() {
     this.truncateText();
-    this.showToggleButton = this.textIsTruncated();
+    this.showToggleButton = this.isTogglable && this.textIsTruncated();
   }
 };
 </script>
