@@ -23,26 +23,21 @@
       </div>
     </div>
     <div class="detail-text">
-      <p class="uk-text-lead launch-detail" ref="launchDetail">
-        {{ launchDetails }}
-      </p>
-      <a
-        class="uk-button uk-button-text toggle-detail-text-button"
-        :class="{ hidden: !showToggleButton }"
-        @click.prevent="toggleDetailText"
-        ref="toggleDetailTextButton"
-        href="#"
-        >{{ toggleDetailButtonText }}</a
-      >
+      <CollapsibleText :text-content="launchDetails" :max-height-px="100">
+        <p class="uk-text-lead launch-detail" ref="launchDetail">
+          {{ launchDetails }}
+        </p>
+      </CollapsibleText>
     </div>
   </article>
 </template>
 
 <script>
-import shave from "shave";
+import CollapsibleText from "@/components/CollapsibleText";
 
 export default {
   name: "LaunchesItemDetail",
+  components: { CollapsibleText },
   props: {
     launch: {
       type: Object,
@@ -50,12 +45,6 @@ export default {
         return {};
       }
     }
-  },
-  data: function() {
-    return {
-      showToggleButton: false,
-      toggleDetailButtonText: "more"
-    };
   },
   computed: {
     launchDateUtc() {
@@ -76,31 +65,6 @@ export default {
     missionStatus() {
       return this.missionSuccess ? "Success" : "Failure";
     }
-  },
-  methods: {
-    truncateDetailText() {
-      shave(this.$refs.launchDetail, 100);
-      this.toggleDetailButtonText = "more";
-    },
-    detailTextIsTruncated() {
-      // \u2026 is the Unicode for ellipsis. Shave library will add this character in a span.
-      return this.$refs.launchDetail.children[0]?.textContent?.match(/\u2026/);
-    },
-    expandDetailText() {
-      this.$refs.launchDetail.textContent = this.launchDetails;
-      this.toggleDetailButtonText = "less";
-    },
-    toggleDetailText() {
-      this.$refs.toggleDetailTextButton.blur();
-      if (this.detailTextIsTruncated()) {
-        return this.expandDetailText();
-      }
-      this.truncateDetailText();
-    }
-  },
-  mounted: function() {
-    this.truncateDetailText();
-    this.showToggleButton = this.detailTextIsTruncated();
   }
 };
 </script>
@@ -115,13 +79,12 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.detail-text {
+</style>
+
+<style lang="scss">
+.collapsible-text {
   .launch-detail {
     margin: 0;
-  }
-  .toggle-detail-text-button {
-    float: right;
-    margin-right: 1em;
   }
 }
 </style>
