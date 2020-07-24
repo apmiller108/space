@@ -2,13 +2,23 @@
   <article class="uk-article launches-item-detail">
     <div class="header">
       <h1 class="uk-article-title">
-        <a class="uk-link-reset" href="">{{ missionName }}</a>
+        {{ missionName }}
       </h1>
     </div>
     <div class="meta">
       <p class="uk-article-meta launch-time-and-place">
-        <!-- TODO: Google Maps link `https://maps.google.com/?q={{ launchSiteName }} -->
-        <span>{{ launchSiteName }}</span>
+        <span>
+          <a
+            class="uk-link-muted icon-link"
+            :href="googleMapsUrl"
+            target="_blank"
+          >
+            <span>{{ launchSiteName }}</span>
+            <span class="small-icon">
+              <ExternalLinkIcon />
+            </span>
+          </a>
+        </span>
         <span>{{ launchDateUtc | date({ utc: true }) }}</span>
       </p>
       <div>
@@ -35,10 +45,11 @@
 
 <script>
 import CollapsibleText from "@/components/CollapsibleText";
+import { ExternalLinkIcon } from "@/assets/icons/icons";
 
 export default {
   name: "LaunchesItemDetail",
-  components: { CollapsibleText },
+  components: { CollapsibleText, ExternalLinkIcon },
   props: {
     launch: {
       type: Object,
@@ -48,6 +59,9 @@ export default {
     }
   },
   computed: {
+    googleMapsUrl() {
+      return `https://maps.google.com/?q=${this.launchSiteName}`;
+    },
     launchDateUtc() {
       return this.launch.launch_date_utc;
     },
