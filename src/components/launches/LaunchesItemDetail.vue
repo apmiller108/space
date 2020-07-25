@@ -40,6 +40,9 @@
         </p>
       </CollapsibleText>
     </div>
+    <div class="detail-video">
+      <div :id="videoPlayerId" />
+    </div>
   </article>
 </template>
 
@@ -79,6 +82,12 @@ export default {
     },
     missionStatus() {
       return this.missionSuccess ? "Success" : "Failure";
+    },
+    youtubeId() {
+      return this.launch.links.youtube_id;
+    },
+    videoPlayerId() {
+      return `launch-video-${this.youtubeId}`;
     }
   }
 };
