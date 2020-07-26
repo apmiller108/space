@@ -61,6 +61,26 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      videoPlayer: null
+    };
+  },
+  mounted() {
+    this.videoPlayer = new window.YT.Player(this.videoPlayerId, {
+      height: "300",
+      width: "540",
+      videoId: this.youtubeId,
+      events: {
+        onReady: function() {
+          console.log("ready");
+        },
+        onStateChange: function() {
+          console.log("stateChange");
+        }
+      }
+    });
+  },
   computed: {
     googleMapsUrl() {
       return `https://maps.google.com/?q=${this.launchSiteName}`;
