@@ -54,17 +54,22 @@ export default {
   name: "LaunchesItemDetail",
   components: { CollapsibleText, ExternalLinkIcon },
   props: {
-    launch: {
-      type: Object,
-      default: function() {
-        return {};
-      }
+    missionName: {
+      type: String,
+      required: true
     }
   },
   data() {
     return {
-      videoPlayer: null
+      videoPlayer: null,
+      launch: null
     };
+  },
+  created() {
+    // TODO: open modal programatically when routed via browser controls
+    this.launch = this.$store.getters["launches/findByMissionName"](
+      this.missionName
+    );
   },
   mounted() {
     this.videoPlayer = new window.YT.Player(this.videoPlayerId, {
@@ -93,9 +98,6 @@ export default {
     },
     launchSiteName() {
       return this.launch.launch_site.site_name_long;
-    },
-    missionName() {
-      return this.launch.mission_name;
     },
     missionSuccess() {
       return this.launch.launch_success;

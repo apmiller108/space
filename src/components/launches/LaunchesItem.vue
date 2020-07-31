@@ -3,6 +3,7 @@
     <div
       class="timeline-item uk-card uk-card-body uk-card-default uk-card-hover"
       :uk-toggle="`target: #${modalId}`"
+      @click="routeToLaunch"
     >
       <div class="timeline-item-details">
         <div
@@ -52,19 +53,19 @@
       </div>
     </div>
     <Modal :modal-id="modalId">
-      <LaunchesItemDetail :launch="this.launch" />
+      <router-view />
+      <!-- <LaunchesItemDetail :launch="this.launch" /> -->
     </Modal>
   </div>
 </template>
 
 <script>
-import LaunchesItemDetail from "@/components/launches/LaunchesItemDetail";
 import Modal from "@/components/Modal";
 import CollapsibleText from "@/components/CollapsibleText";
 
 export default {
   name: "LaunchesItem",
-  components: { CollapsibleText, LaunchesItemDetail, Modal },
+  components: { CollapsibleText, Modal },
   props: {
     launch: {
       type: Object,
@@ -94,6 +95,15 @@ export default {
     },
     modalId() {
       return `launch-detail-modal-${this.launchDateUnix}`;
+    }
+  },
+  methods: {
+    routeToLaunch() {
+      this.$router.push({
+        name: "Launch",
+        params: { missionName: this.missionName }
+      });
+      console.log("route");
     }
   }
 };

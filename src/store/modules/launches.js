@@ -38,6 +38,9 @@ export const getters = {
   },
   isLoading(state) {
     return state.loading;
+  },
+  findByMissionName: (_state, getters) => name => {
+    return getters.all.find(launch => launch.mission_name === name);
   }
 };
 

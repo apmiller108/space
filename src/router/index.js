@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Ships from "@/components/Ships.vue";
 import Ship from "@/components/Ship.vue";
 import Launches from "@/components/launches/Launches.vue";
+import LaunchesItemDetail from "@/components/launches/LaunchesItemDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -29,7 +30,15 @@ const routes = [
   {
     path: "/launches",
     name: "Launches",
-    component: Launches
+    component: Launches,
+    children: [
+      {
+        path: ":missionName",
+        name: "Launch",
+        component: LaunchesItemDetail,
+        props: true
+      }
+    ]
   }
 ];
 
