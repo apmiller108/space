@@ -46,7 +46,8 @@ export default {
   computed: {
     ...mapGetters(["launches/all", "launches/isLoading"]),
     modalElem() {
-      // ref on a component provides a reference to the Component instance
+      // ref on a component provides a reference to the Component instance.
+      // In this case we need the DOM element the component is bound to.
       return this.$refs.launchDetailModal.$el;
     },
     uikitModal() {
@@ -76,11 +77,14 @@ export default {
       this.$router.push({ name: "Launches" });
     },
     routeToLaunch(missionName) {
-      this.uikitModal.show();
+      this.showLaunchItemDetailModal();
       this.$router.push({
         name: "Launch",
         params: { missionName: missionName }
       });
+    },
+    showLaunchItemDetailModal() {
+      this.uikitModal.show();
     }
   }
 };

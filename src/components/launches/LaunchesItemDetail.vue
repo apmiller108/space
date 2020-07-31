@@ -66,7 +66,11 @@ export default {
     };
   },
   created() {
-    // TODO: open modal programatically when routed via browser controls
+    // TODO: Open modal programatically when routed via browser controls.
+    // TODO: Handle when Vuex doesn't have the launch anymore. Maybe redirect to list
+    //       or retrieve from API.
+    // TODO: Add the selected launch to store. Add getter for selected launch
+    //       to Launches as reactive prop. Show modal when there is a selected launch.
     this.launch = this.$store.getters["launches/findByMissionName"](
       this.missionName
     );
