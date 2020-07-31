@@ -9,22 +9,32 @@
             v-for="launch in this['launches/all']"
             :launch="launch"
             :key="launch.launch_date_unix"
+            @show-launch-item-detail="routeToLaunch"
           >
           </LaunchesItem>
         </transition-group>
         <span v-if="this['launches/isLoading']" uk-spinner="ratio: 3.5"></span>
       </div>
     </div>
+    <Modal
+      :modal-id="'launch-detail-modal'"
+      ref="launchDetailModal"
+      @hidden="routeToLaunches"
+    >
+      <router-view />
+    </Modal>
   </section>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import LaunchesItem from "./LaunchesItem";
+import Modal from "@/components/Modal";
+import { modal } from "uikit";
 
 export default {
   name: "Launches",
-  components: { LaunchesItem },
+  components: { LaunchesItem, Modal },
   created: function() {
     if (this.$store.getters["launches/all"].length) return;
     this.getLaunches();
@@ -34,7 +44,14 @@ export default {
     window.onscroll = this.getLaunchesOnScroll;
   },
   computed: {
-    ...mapGetters(["launches/all", "launches/isLoading"])
+    ...mapGetters(["launches/all", "launches/isLoading"]),
+    modalElem() {
+      // ref on a component provides a reference to the Component instance
+      return this.$refs.launchDetailModal.$el;
+    },
+    uikitModal() {
+      return modal(this.modalElem);
+    }
   },
   methods: {
     getLaunches() {
@@ -54,6 +71,16 @@ export default {
       tag.src = "https://www.youtube.com/player_api";
       const firstScriptTag = document.getElementsByTagName("script")[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    },
+    routeToLaunches() {
+      this.$router.push({ name: "Launches" });
+    },
+    routeToLaunch(missionName) {
+      this.uikitModal.show();
+      this.$router.push({
+        name: "Launch",
+        params: { missionName: missionName }
+      });
     }
   }
 };
