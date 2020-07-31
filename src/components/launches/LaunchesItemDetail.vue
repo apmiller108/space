@@ -72,19 +72,27 @@ export default {
     );
   },
   mounted() {
+    // TODO: try loading the YT API library here.
+    // TODO: extract YouTubeVideoPlayer component
     this.videoPlayer = new window.YT.Player(this.videoPlayerId, {
       height: "300",
       width: "540",
       videoId: this.youtubeId,
       events: {
         onReady: function() {
-          console.log("ready");
+          console.log("YT player ready");
         },
         onStateChange: function() {
-          console.log("stateChange");
+          console.log("YT player stateChange");
         }
       }
     });
+  },
+  beforeDestroy() {
+    if (this.videoPlayer && this.videoPlayer.destroy) {
+      this.videoPlayer.destroy();
+    }
+    delete this.videoPlayer;
   },
   computed: {
     googleMapsUrl() {
