@@ -49,6 +49,7 @@
 <script>
 import CollapsibleText from "@/components/CollapsibleText";
 import { ExternalLinkIcon } from "@/assets/icons/icons";
+import { mapGetters } from "vuex";
 
 export default {
   name: "LaunchesItemDetail",
@@ -76,21 +77,13 @@ export default {
     );
   },
   mounted() {
-    // TODO: try loading the YT API library here.
     // TODO: extract YouTubeVideoPlayer component
-    this.videoPlayer = new window.YT.Player(this.videoPlayerId, {
-      height: "300",
-      width: "540",
-      videoId: this.youtubeId,
-      events: {
-        onReady: function() {
-          console.log("YT player ready");
-        },
-        onStateChange: function() {
-          console.log("YT player stateChange");
-        }
-      }
-    });
+    if (!this.isYoutubeReady) {
+      window.onYouTubePlayerAPIReady = this.onYouTubePlayerAPIReady;
+      this.downloadYoutubeAPI();
+    } else {
+      this.initVideoPlayer();
+    }
   },
   beforeDestroy() {
     if (this.videoPlayer && this.videoPlayer.destroy) {
@@ -99,6 +92,7 @@ export default {
     delete this.videoPlayer;
   },
   computed: {
+    ...mapGetters(["isYoutubeReady"]),
     googleMapsUrl() {
       return `https://maps.google.com/?q=${this.launchSiteName}`;
     },
@@ -122,6 +116,39 @@ export default {
     },
     videoPlayerId() {
       return `launch-video-${this.youtubeId}`;
+    }
+  },
+  methods: {
+    downloadYoutubeAPI() {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/player_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    },
+    onYouTubePlayerAPIReady() {
+      this.$store.commit("setYoutubeApiLibraryLoaded", true);
+    },
+    initVideoPlayer() {
+      this.videoPlayer = new window.YT.Player(this.videoPlayerId, {
+        height: "300",
+        width: "540",
+        videoId: this.youtubeId,
+        events: {
+          onReady: function() {
+            console.log("YT player ready");
+          },
+          onStateChange: function() {
+            console.log("YT player stateChange");
+          }
+        }
+      });
+    }
+  },
+  watch: {
+    isYoutubeReady: function(value) {
+      if (value) {
+        this.initVideoPlayer();
+      }
     }
   }
 };

@@ -40,7 +40,6 @@ export default {
     this.getLaunches();
   },
   mounted: function() {
-    this.downloadYoutubeAPI();
     window.onscroll = this.getLaunchesOnScroll;
   },
   computed: {
@@ -66,12 +65,6 @@ export default {
       if (atBottom && !this["launches/isLoading"]) {
         this.getLaunches();
       }
-    },
-    downloadYoutubeAPI() {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/player_api";
-      const firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     },
     routeToLaunches() {
       this.$router.push({ name: "Launches" });
