@@ -55,8 +55,8 @@ export default {
   name: "LaunchesItemDetail",
   components: { CollapsibleText, ExternalLinkIcon, YouTubeVideoPlayer },
   props: {
-    missionName: {
-      type: String,
+    flightNumber: {
+      type: Number,
       required: true
     }
   },
@@ -67,13 +67,11 @@ export default {
   },
   created() {
     // TODO: Open modal programatically when routed via browser controls.
-    // TODO: Handle when Vuex doesn't have the launch anymore. Maybe redirect to list
-    //       or retrieve from API.
-    // TODO: Add the selected launch to store. Add getter for selected launch
-    //       to Launches as reactive prop. Show modal when there is a selected launch.
-    this.launch = this.$store.getters["launches/findByMissionName"](
-      this.missionName
-    );
+    //       Show modal when there is a selected launch. Maybe use a watcher
+    //       in Launches.vue
+    // TODO: Move selected luanch to on beforeRouteEnter guard
+    // TODO: Clear selected launch on beforeRouteLeave callback
+    this.launch = this.$store.getters["launches/getSelectedLaunch"];
   },
   computed: {
     googleMapsUrl() {
@@ -84,6 +82,9 @@ export default {
     },
     launchDetails() {
       return this.launch.details;
+    },
+    missionName() {
+      return this.launch.mission_name;
     },
     launchSiteName() {
       return this.launch.launch_site.site_name_long;

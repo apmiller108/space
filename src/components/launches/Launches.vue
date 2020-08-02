@@ -69,11 +69,12 @@ export default {
     routeToLaunches() {
       this.$router.push({ name: "Launches" });
     },
-    routeToLaunch(missionName) {
+    routeToLaunch(flightNumber) {
+      this.$store.commit("launches/setSelectedLaunch", flightNumber);
       this.showLaunchItemDetailModal();
       this.$router.push({
         name: "Launch",
-        params: { missionName: missionName }
+        params: { flightNumber }
       });
     },
     showLaunchItemDetailModal() {

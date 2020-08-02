@@ -86,11 +86,14 @@ export default {
     },
     launchDateUnix() {
       return this.launch.launch_date_unix;
+    },
+    flightNumber() {
+      return this.launch.flight_number;
     }
   },
   methods: {
     showLaunchItemDetail() {
-      this.$emit("show-launch-item-detail", this.missionName);
+      this.$emit("show-launch-item-detail", this.flightNumber);
     }
   }
 };

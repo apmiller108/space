@@ -5,6 +5,7 @@ import Ships from "@/components/Ships.vue";
 import Ship from "@/components/Ship.vue";
 import Launches from "@/components/launches/Launches.vue";
 import LaunchesItemDetail from "@/components/launches/LaunchesItemDetail.vue";
+import store from "@/store/index";
 
 Vue.use(VueRouter);
 
@@ -33,10 +34,21 @@ const routes = [
     component: Launches,
     children: [
       {
-        path: ":missionName",
+        path: ":flightNumber",
         name: "Launch",
         component: LaunchesItemDetail,
-        props: true
+        props(route) {
+          const flightNumber =
+            Number.parseInt(route.params.flightNumber, 10) || 0;
+          return { flightNumber };
+        },
+        beforeEnter(to, from, next) {
+          const { flightNumber } = to.params;
+          if (!store.getters["launches/findByFlightNumber"](flightNumber)) {
+            return next({ name: "Launches" });
+          }
+          next();
+        }
       }
     ]
   }
