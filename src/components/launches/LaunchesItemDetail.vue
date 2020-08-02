@@ -41,7 +41,7 @@
       </CollapsibleText>
     </div>
     <div class="detail-video">
-      <div :id="videoPlayerId" />
+      <YouTubeVideoPlayer :video-id="youtubeId" />
     </div>
   </article>
 </template>
@@ -49,11 +49,11 @@
 <script>
 import CollapsibleText from "@/components/CollapsibleText";
 import { ExternalLinkIcon } from "@/assets/icons/icons";
-import { mapGetters } from "vuex";
+import YouTubeVideoPlayer from "@/components/YouTubeVideoPlayer";
 
 export default {
   name: "LaunchesItemDetail",
-  components: { CollapsibleText, ExternalLinkIcon },
+  components: { CollapsibleText, ExternalLinkIcon, YouTubeVideoPlayer },
   props: {
     missionName: {
       type: String,
@@ -62,7 +62,6 @@ export default {
   },
   data() {
     return {
-      videoPlayer: null,
       launch: null
     };
   },
@@ -76,23 +75,7 @@ export default {
       this.missionName
     );
   },
-  mounted() {
-    // TODO: extract YouTubeVideoPlayer component
-    if (!this.isYoutubeReady) {
-      window.onYouTubePlayerAPIReady = this.onYouTubePlayerAPIReady;
-      this.downloadYoutubeAPI();
-    } else {
-      this.initVideoPlayer();
-    }
-  },
-  beforeDestroy() {
-    if (this.videoPlayer && this.videoPlayer.destroy) {
-      this.videoPlayer.destroy();
-    }
-    delete this.videoPlayer;
-  },
   computed: {
-    ...mapGetters(["isYoutubeReady"]),
     googleMapsUrl() {
       return `https://maps.google.com/?q=${this.launchSiteName}`;
     },
@@ -113,42 +96,6 @@ export default {
     },
     youtubeId() {
       return this.launch.links.youtube_id;
-    },
-    videoPlayerId() {
-      return `launch-video-${this.youtubeId}`;
-    }
-  },
-  methods: {
-    downloadYoutubeAPI() {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/player_api";
-      const firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    },
-    onYouTubePlayerAPIReady() {
-      this.$store.commit("setYoutubeApiLibraryLoaded", true);
-    },
-    initVideoPlayer() {
-      this.videoPlayer = new window.YT.Player(this.videoPlayerId, {
-        height: "300",
-        width: "540",
-        videoId: this.youtubeId,
-        events: {
-          onReady: function() {
-            console.log("YT player ready");
-          },
-          onStateChange: function() {
-            console.log("YT player stateChange");
-          }
-        }
-      });
-    }
-  },
-  watch: {
-    isYoutubeReady: function(value) {
-      if (value) {
-        this.initVideoPlayer();
-      }
     }
   }
 };

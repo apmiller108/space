@@ -1,0 +1,77 @@
+<template>
+  <div class="yt-video-player">
+    <div :id="videoPlayerId" />
+  </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+  name: "YouTubeVideoPlayer",
+  props: {
+    videoId: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      videoPlayer: null
+    };
+  },
+  mounted() {
+    if (!this.isYoutubeReady) {
+      window.onYouTubePlayerAPIReady = this.onYouTubePlayerAPIReady;
+      this.downloadYoutubeAPI();
+    } else {
+      this.initVideoPlayer();
+    }
+  },
+  beforeDestroy() {
+    if (this.videoPlayer && this.videoPlayer.destroy) {
+      this.videoPlayer.destroy();
+    }
+    delete this.videoPlayer;
+  },
+  computed: {
+    ...mapGetters(["isYoutubeReady"]),
+    videoPlayerId() {
+      return `yt-video-${this.videoId}`;
+    }
+  },
+  methods: {
+    downloadYoutubeAPI() {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/player_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    },
+    onYouTubePlayerAPIReady() {
+      this.$store.commit("setYoutubeApiLibraryLoaded", true);
+    },
+    initVideoPlayer() {
+      this.videoPlayer = new window.YT.Player(this.videoPlayerId, {
+        height: "300",
+        width: "540",
+        videoId: this.videoId,
+        events: {
+          onReady: function() {
+            console.log("YT player ready");
+          },
+          onStateChange: function() {
+            console.log("YT player stateChange");
+          }
+        }
+      });
+    }
+  },
+  watch: {
+    isYoutubeReady: function(value) {
+      if (value) {
+        this.initVideoPlayer();
+      }
+    }
+  }
+};
+</script>
