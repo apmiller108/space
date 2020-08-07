@@ -1,5 +1,5 @@
 <template>
-  <article class="uk-article launches-item-detail">
+  <article v-if="launch" class="uk-article launches-item-detail">
     <div class="header">
       <h1 class="uk-article-title">
         {{ missionName }}
@@ -50,7 +50,12 @@
 import CollapsibleText from "@/components/CollapsibleText";
 import { ExternalLinkIcon } from "@/assets/icons/icons";
 import YouTubeVideoPlayer from "@/components/YouTubeVideoPlayer";
+import store from "@/store/index";
 
+// TODO: Open modal programatically when routed via browser controls.
+//       Show modal when there is a selected launch. Maybe use a watcher
+//       in Launches.vue
+// TODO: emit ready event from youtube player. Show spinner until its is loaded.
 export default {
   name: "LaunchesItemDetail",
   components: { CollapsibleText, ExternalLinkIcon, YouTubeVideoPlayer },
@@ -65,13 +70,15 @@ export default {
       launch: null
     };
   },
-  created() {
-    // TODO: Open modal programatically when routed via browser controls.
-    //       Show modal when there is a selected launch. Maybe use a watcher
-    //       in Launches.vue
-    // TODO: Move selected luanch to on beforeRouteEnter guard
-    // TODO: Clear selected launch on beforeRouteLeave callback
-    this.launch = this.$store.getters["launches/getSelectedLaunch"];
+  beforeRouteEnter(to, _from, next) {
+    const { flightNumber } = to.params;
+    const launch = store.getters["launches/findByFlightNumber"](flightNumber);
+    if (!launch) {
+      return next({ name: "Launches" });
+    }
+    next(vm => {
+      vm.launch = launch;
+    });
   },
   computed: {
     googleMapsUrl() {
@@ -87,7 +94,7 @@ export default {
       return this.launch.mission_name;
     },
     launchSiteName() {
-      return this.launch.launch_site.site_name_long;
+      return this.launch.launch_site?.site_name_long;
     },
     missionSuccess() {
       return this.launch.launch_success;
@@ -96,7 +103,7 @@ export default {
       return this.missionSuccess ? "Success" : "Failure";
     },
     youtubeId() {
-      return this.launch.links.youtube_id;
+      return this.launch.links?.youtube_id;
     }
   }
 };

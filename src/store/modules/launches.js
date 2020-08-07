@@ -2,7 +2,6 @@ import launchesApi from "@/services/spacex/launchesApi";
 
 export const state = {
   all: [],
-  selected: null,
   error: null,
   loading: false
 };
@@ -10,9 +9,6 @@ export const state = {
 export const mutations = {
   addLaunches(state, launches) {
     state.all.push(...launches);
-  },
-  setSelectedLaunch(state, flightNumber) {
-    state.selected = flightNumber;
   },
   setError(state, error) {
     state.error = error;
@@ -52,9 +48,6 @@ export const getters = {
   findByFlightNumber: (_state, getters) => flightNumber => {
     const castedFN = Number.parseInt(flightNumber, 10) || 0;
     return getters.all.find(launch => launch.flight_number === castedFN);
-  },
-  getSelectedLaunch(state, getters) {
-    return getters.findByFlightNumber(state.selected);
   }
 };
 
