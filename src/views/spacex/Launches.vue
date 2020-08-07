@@ -70,7 +70,6 @@ export default {
       this.$router.push({ name: "Launches" });
     },
     routeToLaunch(flightNumber) {
-      this.showLaunchItemDetailModal();
       this.$router.push({
         name: "Launch",
         params: { flightNumber }
@@ -78,6 +77,16 @@ export default {
     },
     showLaunchItemDetailModal() {
       this.uikitModal.show();
+    }
+  },
+  watch: {
+    "$route.params.flightNumber": function(flightNumber) {
+      if (
+        flightNumber &&
+        this.$store.getters["launches/findByFlightNumber"](flightNumber)
+      ) {
+        this.showLaunchItemDetailModal();
+      }
     }
   }
 };

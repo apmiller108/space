@@ -52,9 +52,6 @@ import { ExternalLinkIcon } from "@/assets/icons/icons";
 import YouTubeVideoPlayer from "@/components/YouTubeVideoPlayer";
 import store from "@/store/index";
 
-// TODO: Open modal programatically when routed via browser controls.
-//       Show modal when there is a selected launch. Maybe use a watcher
-//       in Launches.vue
 // TODO: emit ready event from youtube player. Show spinner until its is loaded.
 export default {
   name: "LaunchesItemDetail",
