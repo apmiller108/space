@@ -3,8 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Ships from "@/components/Ships.vue";
 import Ship from "@/components/Ship.vue";
-import Launches from "@/components/launches/Launches.vue";
-import LaunchesItemDetail from "@/components/launches/LaunchesItemDetail.vue";
+import Launches from "@/views/spacex/Launches.vue";
+import LaunchesItemDetail from "@/views/spacex/LaunchesItemDetail.vue";
 import store from "@/store/index";
 
 Vue.use(VueRouter);

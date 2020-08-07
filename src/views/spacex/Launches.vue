@@ -28,7 +28,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import LaunchesItem from "./LaunchesItem";
+import LaunchesItem from "@/components/spacex/launches/LaunchesItem";
 import Modal from "@/components/Modal";
 import { modal } from "uikit";
 
