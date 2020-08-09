@@ -1,6 +1,11 @@
 <template>
   <div class="yt-video-player">
-    <div :id="videoPlayerId" />
+    <span
+      v-if="!videoPlayerReady"
+      uk-spinner="ratio: 2.5"
+      class="video-player-loading-spinner"
+    ></span>
+    <div class="video-player-container" :id="videoPlayerId" />
   </div>
 </template>
 
@@ -17,7 +22,8 @@ export default {
   },
   data() {
     return {
-      videoPlayer: null
+      videoPlayer: null,
+      videoPlayerReady: false
     };
   },
   mounted() {
@@ -56,14 +62,15 @@ export default {
         width: "540",
         videoId: this.videoId,
         events: {
-          onReady: function() {
-            console.log("YT player ready");
-          },
+          onReady: this.setVideoPlayerReady,
           onStateChange: function() {
             console.log("YT player stateChange");
           }
         }
       });
+    },
+    setVideoPlayerReady() {
+      this.videoPlayerReady = true;
     }
   },
   watch: {
@@ -75,3 +82,20 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.yt-video-player {
+  position: relative;
+}
+.video-player-container {
+  min-height: 300px;
+  min-width: 540px;
+}
+.video-player-loading-spinner {
+  position: absolute;
+  color: red;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

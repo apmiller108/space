@@ -52,7 +52,6 @@ import { ExternalLinkIcon } from "@/assets/icons/icons";
 import YouTubeVideoPlayer from "@/components/YouTubeVideoPlayer";
 import store from "@/store/index";
 
-// TODO: emit ready event from youtube player. Show spinner until its is loaded.
 export default {
   name: "LaunchesItemDetail",
   components: { CollapsibleText, ExternalLinkIcon, YouTubeVideoPlayer },
@@ -68,6 +67,10 @@ export default {
     };
   },
   beforeRouteEnter(to, _from, next) {
+    // TODO: try to get launch from API when it's not available in the store.
+    // TODO: Make the view responsive but keep it simple.
+    // TODO: Build navigation.
+    // TODO: Make parent Spacex route of which launches should be nested.
     const { flightNumber } = to.params;
     const launch = store.getters["launches/findByFlightNumber"](flightNumber);
     if (!launch) {
