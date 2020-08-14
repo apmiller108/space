@@ -14,5 +14,10 @@ export default {
     return axios
       .get(`${Constants.SPACEX_BASE_URL}/launches`, params)
       .then(response => response.data);
+  },
+  get(flightNumber) {
+    return axios
+      .get(`${Constants.SPACEX_BASE_URL}/launches/${flightNumber}`)
+      .then(response => response.data);
   }
 };

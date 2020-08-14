@@ -50,6 +50,7 @@
 import CollapsibleText from "@/components/CollapsibleText";
 import { ExternalLinkIcon } from "@/assets/icons/icons";
 import YouTubeVideoPlayer from "@/components/YouTubeVideoPlayer";
+import launchesApi from "@/services/spacex/launchesApi";
 import store from "@/store/index";
 
 export default {
@@ -66,19 +67,30 @@ export default {
       launch: null
     };
   },
-  beforeRouteEnter(to, _from, next) {
-    // TODO: try to get launch from API when it's not available in the store.
+  async beforeRouteEnter(to, _from, next) {
+    // TODO: Add more shit to the detail view
+    // TODO: fix tuncate text bug on item detail refresh
     // TODO: Make the view responsive but keep it simple.
     // TODO: Build navigation.
     // TODO: Make parent Spacex route of which launches should be nested.
     const { flightNumber } = to.params;
-    const launch = store.getters["launches/findByFlightNumber"](flightNumber);
+    let launch = store.getters["launches/findByFlightNumber"](flightNumber);
     if (!launch) {
-      return next({ name: "Launches" });
+      await launchesApi
+        .get(flightNumber)
+        .then(data => {
+          launch = data;
+        })
+        .catch(() => next({ name: "Launches" }));
     }
     next(vm => {
       vm.launch = launch;
+      vm.$store.commit("launches/setActiveLaunch", launch);
     });
+  },
+  beforeRouteLeave(to, from, next) {
+    this.$store.commit("launches/clearActiveLaunch");
+    next();
   },
   computed: {
     googleMapsUrl() {
@@ -126,5 +138,8 @@ export default {
   .launch-detail {
     margin: 0;
   }
+}
+.detail-text {
+  margin: 0 0 1em;
 }
 </style>

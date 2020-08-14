@@ -6,14 +6,14 @@
         <transition-group name="lift-off" tag="div">
           <LaunchesItem
             class="launch"
-            v-for="launch in this['launches/all']"
+            v-for="launch in allLaunches"
             :launch="launch"
             :key="launch.launch_date_unix"
             @show-launch-item-detail="routeToLaunch"
           >
           </LaunchesItem>
         </transition-group>
-        <span v-if="this['launches/isLoading']" uk-spinner="ratio: 3.5"></span>
+        <span v-if="isLoading" uk-spinner="ratio: 3.5"></span>
       </div>
     </div>
     <Modal
@@ -43,7 +43,11 @@ export default {
     window.onscroll = this.getLaunchesOnScroll;
   },
   computed: {
-    ...mapGetters(["launches/all", "launches/isLoading"]),
+    ...mapGetters("launches", {
+      allLaunches: "all",
+      isLoading: "isLoading",
+      activeLaunch: "activeLaunch"
+    }),
     modalElem() {
       // ref on a component provides a reference to the Component instance.
       // In this case we need the DOM element the component is bound to.
@@ -62,7 +66,7 @@ export default {
         document.documentElement.scrollTop + window.innerHeight ===
         document.documentElement.offsetHeight;
 
-      if (atBottom && !this["launches/isLoading"]) {
+      if (atBottom && !this.isLoading) {
         this.getLaunches();
       }
     },
@@ -80,11 +84,8 @@ export default {
     }
   },
   watch: {
-    "$route.params.flightNumber": function(flightNumber) {
-      if (
-        flightNumber &&
-        this.$store.getters["launches/findByFlightNumber"](flightNumber)
-      ) {
+    activeLaunch: function(launch) {
+      if (launch) {
         this.showLaunchItemDetailModal();
       }
     }

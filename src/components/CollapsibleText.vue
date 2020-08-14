@@ -1,14 +1,16 @@
 <template>
   <div class="collapsible-text" ref="collapsibleText">
     <slot />
-    <a
-      class="uk-button uk-button-text toggle-text-button"
-      :class="{ hidden: !showToggleButton }"
-      @click.prevent="toggleText"
-      ref="toggleButton"
-      href="#"
-    >{{ toggleButtonText }}
-    </a>
+    <div class="links">
+      <a
+        class="uk-button uk-button-text toggle-text-button"
+        :class="{ hidden: !showToggleButton }"
+        @click.prevent="toggleText"
+        ref="toggleButton"
+        href="#"
+        >{{ toggleButtonText }}
+      </a>
+    </div>
   </div>
 </template>
 
@@ -75,8 +77,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toggle-text-button {
-  float: right;
-  margin-right: 1em;
+.collapsible-text {
+  position: relative;
+}
+.links {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
