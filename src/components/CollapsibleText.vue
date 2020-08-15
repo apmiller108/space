@@ -70,8 +70,11 @@ export default {
     }
   },
   mounted: function() {
-    this.truncateText();
-    this.showToggleButton = this.isTogglable && this.textIsTruncated();
+    // Text would not be truncated on page refresh without this timeout.
+    window.setTimeout(() => {
+      this.truncateText();
+      this.showToggleButton = this.isTogglable && this.textIsTruncated();
+    }, 0);
   }
 };
 </script>

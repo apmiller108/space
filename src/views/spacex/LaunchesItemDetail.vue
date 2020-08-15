@@ -69,7 +69,6 @@ export default {
   },
   async beforeRouteEnter(to, _from, next) {
     // TODO: Add more shit to the detail view
-    // TODO: fix tuncate text bug on item detail refresh
     // TODO: Make the view responsive but keep it simple.
     // TODO: Build navigation.
     // TODO: Make parent Spacex route of which launches should be nested.
