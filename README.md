@@ -1,5 +1,12 @@
 # space
 
+## TODOs
+
+- [ ] Remaining launch info in detail view.
+- [ ] Responsive launch timeline. Mobile and desktop modes.
+- [ ] Site navigation.
+- [ ] Parent Spacex route of which launches is nested.
+
 ## Project setup
 ```
 yarn install

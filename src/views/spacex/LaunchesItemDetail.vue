@@ -68,10 +68,6 @@ export default {
     };
   },
   async beforeRouteEnter(to, _from, next) {
-    // TODO: Add more shit to the detail view
-    // TODO: Make the view responsive but keep it simple.
-    // TODO: Build navigation.
-    // TODO: Make parent Spacex route of which launches should be nested.
     const { flightNumber } = to.params;
     let launch = store.getters["launches/findByFlightNumber"](flightNumber);
     if (!launch) {
