@@ -9,7 +9,7 @@
             v-for="launch in allLaunches"
             :launch="launch"
             :key="launch.launch_date_unix"
-            @show-launch-item-detail="routeToLaunch"
+            @show-launch-item-detail="routeToLaunchPreview"
           >
           </LaunchesItem>
         </transition-group>
@@ -73,9 +73,9 @@ export default {
     routeToLaunches() {
       this.$router.push({ name: "Launches" });
     },
-    routeToLaunch(flightNumber) {
+    routeToLaunchPreview(flightNumber) {
       this.$router.push({
-        name: "Launch",
+        name: "LaunchPreview",
         params: { flightNumber }
       });
     },

@@ -2,8 +2,9 @@
 
 ## TODOs
 
-- [ ] Remaining launch info in detail view.
+- [ ] launch detail full view.
 - [ ] Responsive launch timeline. Mobile and desktop modes.
+- [ ] Fix broken lazy loading in smaller viewport width.
 - [ ] Site navigation.
 - [ ] Parent Spacex route of which launches is nested.
 

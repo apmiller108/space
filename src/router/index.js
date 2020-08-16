@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Ships from "@/components/Ships.vue";
 import Ship from "@/components/Ship.vue";
 import Launches from "@/views/spacex/Launches.vue";
-import LaunchesItemDetail from "@/views/spacex/LaunchesItemDetail.vue";
+import LaunchesItemDetailPreview from "@/views/spacex/LaunchesItemDetailPreview.vue";
 
 Vue.use(VueRouter);
 
@@ -33,9 +33,9 @@ const routes = [
     component: Launches,
     children: [
       {
-        path: ":flightNumber",
-        name: "Launch",
-        component: LaunchesItemDetail,
+        path: "preview/:flightNumber",
+        name: "LaunchPreview",
+        component: LaunchesItemDetailPreview,
         props(route) {
           const flightNumber =
             Number.parseInt(route.params.flightNumber, 10) || 0;
