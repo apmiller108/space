@@ -1,9 +1,11 @@
 <template>
   <article v-if="launch" class="uk-article launches-item-detail">
     <div class="header">
-      <h1 class="uk-article-title">
-        {{ missionName }}
-      </h1>
+      <router-link :to="{ name: 'Launch', params: { flightNumber } }">
+        <h1 class="uk-article-title">
+          {{ missionName }}
+        </h1>
+      </router-link>
     </div>
     <div class="meta">
       <p class="uk-article-meta launch-time-and-place">

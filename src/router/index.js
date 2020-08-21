@@ -5,8 +5,14 @@ import Ships from "@/components/Ships.vue";
 import Ship from "@/components/Ship.vue";
 import Launches from "@/views/spacex/Launches.vue";
 import LaunchesItemDetailPreview from "@/views/spacex/LaunchesItemDetailPreview.vue";
+import LaunchesItemDetail from "@/views/spacex/LaunchesItemDetail.vue";
 
 Vue.use(VueRouter);
+
+const typeCastParamToNumber = paramKey => route => {
+  const number = Number.parseInt(route.params[paramKey], 10) || 0;
+  return { [paramKey]: number };
+};
 
 const routes = [
   {
@@ -36,13 +42,15 @@ const routes = [
         path: "preview/:flightNumber",
         name: "LaunchPreview",
         component: LaunchesItemDetailPreview,
-        props(route) {
-          const flightNumber =
-            Number.parseInt(route.params.flightNumber, 10) || 0;
-          return { flightNumber };
-        }
+        props: typeCastParamToNumber("flightNumber")
       }
     ]
+  },
+  {
+    path: "/Launches/:flightNumber",
+    name: "Launch",
+    component: LaunchesItemDetail,
+    props: typeCastParamToNumber("flightNumber")
   }
 ];
 
