@@ -42,6 +42,10 @@ export default {
   mounted: function() {
     window.onscroll = this.getLaunchesOnScroll;
   },
+  beforeRouteLeave(to, from, next) {
+    this.hideLaunchItemDetailModal();
+    next();
+  },
   computed: {
     ...mapGetters("launches", {
       allLaunches: "all",
@@ -71,7 +75,9 @@ export default {
       }
     },
     routeToLaunches() {
-      this.$router.push({ name: "Launches" });
+      if (this.$route.name !== "Launches") {
+        this.$router.push({ name: "Launches" });
+      }
     },
     routeToLaunchPreview(flightNumber) {
       this.$router.push({
@@ -81,12 +87,17 @@ export default {
     },
     showLaunchItemDetailModal() {
       this.uikitModal.show();
+    },
+    hideLaunchItemDetailModal() {
+      this.uikitModal.hide();
     }
   },
   watch: {
     activeLaunch: function(launch) {
       if (launch) {
         this.showLaunchItemDetailModal();
+      } else {
+        this.hideLaunchItemDetailModal();
       }
     }
   }
