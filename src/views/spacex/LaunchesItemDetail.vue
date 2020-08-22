@@ -1,12 +1,15 @@
 <template>
   <div>
-    Lauches Item Detail
+    {{ launch }}
   </div>
 </template>
 
 <script>
+import SpacexLaunchResolvable from "@/mixins/SpacexLaunchResolvable";
+
 export default {
   name: "LaunchesItemDetail",
+  mixins: [SpacexLaunchResolvable],
   props: {
     flightNumber: {
       type: Number,

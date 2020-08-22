@@ -49,45 +49,20 @@
 </template>
 
 <script>
+import SpacexLaunchResolvable from "@/mixins/SpacexLaunchResolvable";
 import CollapsibleText from "@/components/CollapsibleText";
 import { ExternalLinkIcon } from "@/assets/icons/icons";
 import YouTubeVideoPlayer from "@/components/YouTubeVideoPlayer";
-import launchesApi from "@/services/spacex/launchesApi";
-import store from "@/store/index";
 
 export default {
   name: "LaunchesItemDetail",
+  mixins: [SpacexLaunchResolvable],
   components: { CollapsibleText, ExternalLinkIcon, YouTubeVideoPlayer },
   props: {
     flightNumber: {
       type: Number,
       required: true
     }
-  },
-  data() {
-    return {
-      launch: null
-    };
-  },
-  async beforeRouteEnter(to, _from, next) {
-    const { flightNumber } = to.params;
-    let launch = store.getters["launches/findByFlightNumber"](flightNumber);
-    if (!launch) {
-      await launchesApi
-        .get(flightNumber)
-        .then(data => {
-          launch = data;
-        })
-        .catch(() => next({ name: "Launches" }));
-    }
-    next(vm => {
-      vm.launch = launch;
-      vm.$store.commit("launches/setActiveLaunch", launch);
-    });
-  },
-  beforeRouteLeave(to, from, next) {
-    this.$store.commit("launches/clearActiveLaunch");
-    next();
   },
   computed: {
     googleMapsUrl() {
