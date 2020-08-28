@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div class="uk-container">
+    <article v-if="launch" class="uk-article uk-container-xlarge">
+      <div class="uk-article-title">
+        {{ missionName }}
+      </div>
+    </article>
+    <span v-else uk-spinner="ratio: 3.5"></span>
     {{ launch }}
   </div>
 </template>
@@ -16,7 +22,11 @@ export default {
       required: true
     }
   },
-  computed: {},
+  computed: {
+    missionName() {
+      return this.launch.mission_name;
+    }
+  },
   methods: {}
 };
 </script>

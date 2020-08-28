@@ -125,4 +125,7 @@ export default {
 .timeline-item-details {
   overflow: hidden;
 }
+.timeline-item {
+  cursor: pointer;
+}
 </style>
