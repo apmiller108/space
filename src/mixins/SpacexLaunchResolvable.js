@@ -16,11 +16,13 @@ export default {
         .then(data => {
           launch = data;
         })
-        .catch(() => next({ name: "Launches" }));
+        .catch(error => console.log(error));
     }
     next(vm => {
-      vm.launch = launch;
-      vm.$store.commit("launches/setActiveLaunch", launch);
+      if (launch) {
+        vm.launch = launch;
+        vm.$store.commit("launches/setActiveLaunch", launch);
+      }
     });
   },
   beforeRouteLeave(to, from, next) {

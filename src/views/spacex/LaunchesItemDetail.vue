@@ -5,16 +5,24 @@
         {{ missionName }}
       </div>
     </article>
-    <span v-else uk-spinner="ratio: 3.5"></span>
-    {{ launch }}
+    <alert
+      v-else
+      :alert-type="'danger'"
+      :message="'Error loading launch.'"
+      @hide="onAlertHide"
+    >
+      <router-link :to="{ name: 'Launches' }">Back to Launches</router-link>
+    </alert>
   </div>
 </template>
 
 <script>
 import SpacexLaunchResolvable from "@/mixins/SpacexLaunchResolvable";
+import Alert from "@/components/Alert";
 
 export default {
   name: "LaunchesItemDetail",
+  components: { Alert },
   mixins: [SpacexLaunchResolvable],
   props: {
     flightNumber: {
@@ -27,7 +35,11 @@ export default {
       return this.launch.mission_name;
     }
   },
-  methods: {}
+  methods: {
+    onAlertHide() {
+      this.$router.push({ name: "Launches" });
+    }
+  }
 };
 </script>
 

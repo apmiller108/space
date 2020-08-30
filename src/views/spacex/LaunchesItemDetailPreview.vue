@@ -64,6 +64,11 @@ export default {
       required: true
     }
   },
+  created() {
+    if (!this.launch) {
+      this.$router.push({ name: "Launches" });
+    }
+  },
   computed: {
     googleMapsUrl() {
       return `https://maps.google.com/?q=${this.launchSiteName}`;
