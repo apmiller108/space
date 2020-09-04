@@ -40,6 +40,9 @@ export default {
     this.getLaunches();
   },
   mounted: function() {
+    if (this.activeLaunch) {
+      this.showLaunchItemDetailModal();
+    }
     window.onscroll = this.getLaunchesOnScroll;
   },
   beforeRouteLeave(to, from, next) {

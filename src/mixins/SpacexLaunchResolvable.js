@@ -2,10 +2,10 @@ import launchesApi from "@/services/spacex/launchesApi";
 import store from "@/store/index";
 
 export default {
-  data() {
-    return {
-      launch: null
-    };
+  computed: {
+    launch() {
+      return this.$store.getters["launches/activeLaunch"];
+    }
   },
   async beforeRouteEnter(to, _from, next) {
     const { flightNumber } = to.params;
@@ -18,12 +18,8 @@ export default {
         })
         .catch(error => console.log(error));
     }
-    next(vm => {
-      if (launch) {
-        vm.launch = launch;
-        vm.$store.commit("launches/setActiveLaunch", launch);
-      }
-    });
+    store.commit("launches/setActiveLaunch", launch);
+    next();
   },
   beforeRouteLeave(to, from, next) {
     this.$store.commit("launches/clearActiveLaunch");
