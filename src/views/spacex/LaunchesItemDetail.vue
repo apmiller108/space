@@ -32,6 +32,17 @@
           </span>
         </div>
       </div>
+      <div class="rocket">
+        <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m">
+          ROCKET
+          <h3 class="uk-card-title">{{ launch.rocket.rocket_name }}</h3>
+          <dl class="uk-description-list">
+            <dt>Rocket Type</dt>
+            <dd>{{ launch.rocket.rocket_type }}</dd>
+          </dl>
+          {{ launch.rocket }}
+        </div>
+      </div>
     </article>
     <alert
       v-else
@@ -93,4 +104,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.launch-time-and-place {
+  .icon-link {
+    display: block;
+  }
+}
+</style>
