@@ -7,7 +7,7 @@ import * as THREE from "three";
 
 export default {
   name: "NearEarthObjects",
-  created() {
+  mounted() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
