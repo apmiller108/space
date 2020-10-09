@@ -1,8 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Launches from "@/views/spacex/Launches.vue";
-import LaunchesItemDetail from "@/views/spacex/LaunchesItemDetail.vue";
+import Home from "../views/Home";
+import Launches from "@/views/spacex/Launches";
+import LaunchesItemDetail from "@/views/spacex/LaunchesItemDetail";
+import NearEarthObjects from "@/views/NearEarthObjects";
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: "/near_earth_objects",
+    name: "NearEarthObjects",
+    component: NearEarthObjects
   }
 ];
 
