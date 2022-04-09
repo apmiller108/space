@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "shave": "^2.5.9",
     "three": "^0.121.1",
     "uikit": "^3.5.4",
